@@ -15,14 +15,17 @@ async function getProducts(category: string) {
 
 export default async function OrdersPage({ params }: { params: { category: string } }) {
     const products = await getProducts(params.category)
-    console.log(products)
+ 
     return (
+        <>
+              <h2 className='mt-10 text-2xl'>Elige y personaliza tu pedido</h2>F        
         <div className='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 items-start'>
             {products.map((product) => 
                 (<ProductCard key={product.id} product={product}/>)
             )}
 
         </div>
+        </>
     )
 }
 
