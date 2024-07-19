@@ -1,0 +1,29 @@
+"use server"
+
+import { prisma } from "@/src/lib/prisma"
+import { OrderSchema } from "@/src/schema"
+
+export const createOrder = async (data: unknown) => {
+
+    const result = OrderSchema.safeParse(data)
+    if (!result.success) {
+        return result
+    }
+    try {
+       await prisma.order.create({
+        data : {
+            name : result.data.name,
+            total : result.data.total,
+            orderProducts : {
+                create : result.data.order.map(product => ({
+                    productId : product.id,
+                    quantity : product.quantity
+                }))
+            }
+        }
+       })
+
+    } catch (error: unknown) {
+        throw new Error(error as string)
+    }
+}
