@@ -1,6 +1,7 @@
 "use client"
 import { useOrder } from '@/src/store/store'
 import React from 'react'
+import OrderDetail from './OrderDetail';
 
 
 const OrderSummary = () => {
@@ -11,7 +12,9 @@ const OrderSummary = () => {
             <h1 className='text-4xl text-center font-black'>Mi pedido</h1>
             {order.length === 0 ? <p className='text-center'>No hay ordenes</p> : (
                 <>
-                
+                {order.map(order => (
+                    <OrderDetail item={order} key={order.id}/>
+                ))}
                 </>
             )}
         </aside>
