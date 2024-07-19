@@ -1,13 +1,21 @@
+import { useOrder } from "@/src/store/store"
 import { OrderType } from "@/src/types"
 import { formatCurrency } from "@/src/utils"
 import { XCircleIcon, PlusIcon, MinusIcon } from "@heroicons/react/20/solid"
-import { FC } from "react"
+import { FC, useMemo } from "react"
 
 interface OrderDetaiProps {
     item: OrderType
 }
+const MAX_QUANTIY = 5
+const MIN_QUANTITY = 1
 
 const OrderDetail: FC<OrderDetaiProps> = ({ item }) => {
+
+    const { increaseQuantity, decreaseQuantity, removeItem } = useOrder();
+    const disableMaxQunatity = useMemo(() => item.quantity === MAX_QUANTIY, [item])
+    const disableminQuantity = useMemo(() => item.quantity === MIN_QUANTITY, [item])
+
     return (
         <div className="shadow space-y-1 p-4 bg-white  border-t border-gray-200 ">
             <div className="space-y-4">
@@ -16,7 +24,7 @@ const OrderDetail: FC<OrderDetaiProps> = ({ item }) => {
 
                     <button
                         type="button"
-                        onClick={() => { }}
+                        onClick={() => removeItem(item.id)}
                     >
                         <XCircleIcon className="text-red-600 h-8 w-8" />
                     </button>
@@ -27,7 +35,9 @@ const OrderDetail: FC<OrderDetaiProps> = ({ item }) => {
                 <div className="flex gap-5 px-10 py-2 bg-gray-100 w-fit rounded-lg">
                     <button
                         type="button"
-                        onClick={() => { }}
+                        onClick={() => decreaseQuantity(item.id)}
+                        disabled={disableminQuantity}
+                        className=" disabled:opacity-10"
                     >
                         <MinusIcon className="h-6 w-6" />
                     </button>
@@ -38,7 +48,9 @@ const OrderDetail: FC<OrderDetaiProps> = ({ item }) => {
 
                     <button
                         type="button"
-                        onClick={() => { }}
+                        onClick={() => increaseQuantity(item.id)}
+                        disabled={disableMaxQunatity}
+                        className=" disabled:opacity-10"
                     >
                         <PlusIcon className="h-6 w-6" />
                     </button>
