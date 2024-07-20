@@ -1,9 +1,12 @@
+import Heading from '@/components/ui/Heading'
 import React from 'react'
 
 const pages = () => {
   return (
     <div>
-      orders
+      <Heading>
+        Administra tus ordenes
+      </Heading>
     </div>
   )
 }
