@@ -1,3 +1,4 @@
+import { completedOrder } from "@/actions/completed-order-action"
 import { OrderWithProducts } from "@/src/types"
 import { formatCurrency } from "@/src/utils"
 
@@ -17,7 +18,7 @@ export default function OrderCard({ order }: OrderCardProps) {
             <p className='text-lg font-medium text-gray-900'>Productos Ordenados:</p>
             <dl className="mt-6 space-y-4">
                 {order.orderProducts.map(product => (
-                    <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
+                    <div className="flex items-center gap-3 border-t border-gray-200 pt-4" key={product.productId}>
                         <dt className="flex items-center text-sm text-gray-400">
                             <span className="font-bold">{product.quantity}</span>
                         </dt>
@@ -32,7 +33,11 @@ export default function OrderCard({ order }: OrderCardProps) {
                 </div>
             </dl>
 
-            <form>
+            <form action={completedOrder}>
+                <input
+                    type="hidden"
+                    value={order.id}
+                    name="order_id" />
                 <input
                     type="submit"
                     className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
