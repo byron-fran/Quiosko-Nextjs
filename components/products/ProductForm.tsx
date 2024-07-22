@@ -1,4 +1,5 @@
 import { prisma } from "@/src/lib/prisma"
+import ImageForm from "./ImageForm";
 
 const getCategories = async () => {
     const categories = await prisma.category.findMany()
@@ -6,7 +7,8 @@ const getCategories = async () => {
 }
 
 export default async function ProductForm() {
-    const categories = await getCategories()
+    const categories = await getCategories();
+
     return (
         <>
             <div className="space-y-2">
@@ -56,6 +58,7 @@ export default async function ProductForm() {
                     ))}
                 </select>
             </div>
+            <ImageForm/>
         </>
     )
 }

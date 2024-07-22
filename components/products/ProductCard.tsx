@@ -1,7 +1,7 @@
 
 import { Product } from '@prisma/client'
 import React from 'react';
-import { formatCurrency } from '@/src/utils';
+import { convertedImage, formatCurrency } from '@/src/utils';
 import Image from 'next/image';
 import AddToCartButton from './AddToCartButton';
 
@@ -10,11 +10,12 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+    
     return (
         <div className='border bg-white'>
           
             <Image
-                src={`/products/${product.image}.jpg`}
+                src={convertedImage(product.image)}
                 alt={product.name}
                 width={400}
                 height={500}
