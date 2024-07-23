@@ -1,10 +1,14 @@
 "use client"
+import { convertedImage } from '@/src/utils';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useState } from 'react';
 import { TbPhotoPlus } from 'react-icons/tb';
 
-const ImageForm = () => {
+interface ImageForm {
+    image?: string
+}
+const ImageForm = ({ image }: ImageForm) => {
     const [imageUrl, setImageUrl] = useState<string>('');
 
     return (
@@ -45,7 +49,19 @@ const ImageForm = () => {
                             )}
                         </div>
                     </div>
-                    <input type="hidden" value={imageUrl} name='image' />
+                    {image && !imageUrl &&(
+                        <div className='space-y-2 '>
+                            <label>Imagen actual</label>
+                            <div className="relative w-64 h-64">
+                                <Image
+                                    fill
+                                    alt='image'
+                                    src={convertedImage(image)}
+                                />
+                            </div>
+                        </div>
+                    )}
+                    <input type="hidden" defaultValue={imageUrl ? imageUrl : image} name='image' />
                 </>
             )}
         </CldUploadWidget>

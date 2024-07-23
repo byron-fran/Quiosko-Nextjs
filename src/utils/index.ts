@@ -8,7 +8,7 @@ export function formatCurrency (amount : number){
 export const convertedImage = (pathImage : string) => {
     const urlStart = 'https://res.cloudinary.com'
     if(pathImage.startsWith(urlStart)){
-
+        
         return pathImage
     }
     else{
